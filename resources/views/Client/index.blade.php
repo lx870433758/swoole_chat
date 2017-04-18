@@ -11,7 +11,7 @@
 </body>
 <script>
     var msg = document.getElementById("msg");
-    var wsServer = 'ws://127.0.0.1:9505';
+    var wsServer = 'ws://106.14.10.215:9505';
     var websocket = new WebSocket(wsServer);
     //onopen监听连接打开
     websocket.onopen = function (evt) {
