@@ -7,13 +7,16 @@ namespace App\Handler;
  * Time: 20:35
  */
 
-class Swoole{
-    private  $host;
-    private  $port;
+class Swoole extends \swoole_websocket_server{
+
     public function swoole_start(){
+
         $ws = new \swoole_websocket_server($this->host, $this->port);
 
-        $ws->on('open', $this->open($ws,$request));
+        $ws->on('open', function ($ws, $request) {
+            $fd[] = $request->fd;
+            $GLOBALS['fd'][] = $fd;
+        });
 
         $ws->on('message', function ($ws, $frame) {
             $msg =  "用户$frame->fd :$frame->data\n";
@@ -29,15 +32,5 @@ class Swoole{
         });
 
         $ws->start();
-    }
-    public function open($ws, $request) {
-        $fd[] = $request->fd;
-        $GLOBALS['fd'][] = $fd;
-    }
-    public function message($ws,$frame){
-
-    }
-    public function close($ws,$request){
-
     }
 }
