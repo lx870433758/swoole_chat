@@ -1,5 +1,6 @@
 <?php
-
+echo 1;
+return;
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
