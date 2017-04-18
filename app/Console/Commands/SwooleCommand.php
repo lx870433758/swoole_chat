@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class Swoole extends Command
+class SwooleCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,16 +37,17 @@ class Swoole extends Command
      */
     public function handle()
     {
+        //
         $ws = new swoole_websocket_server("0.0.0.0", 9505);
+
+
         $ws->on('open', function ($ws, $request) {
             $fd[] = $request->fd;
             $GLOBALS['fd'][] = $fd;
-            $ws->push($request->fd, "hello, welcome\n");
         });
 
         $ws->on('message', function ($ws, $frame) {
             $msg =  "用户$frame->fd :$frame->data\n";
-            //$msg =  json_encode($frame);
             foreach($GLOBALS['fd'] as $aa){
                 foreach($aa as $i){
                     $ws->push($i,$msg);
