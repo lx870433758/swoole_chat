@@ -38,7 +38,7 @@
 
     //onmessage 监听服务器数据推送
     websocket.onmessage = function (evt) {
-        //msg.innerHTML += evt.data +'<br>';
+        msg.innerHTML += evt.data +'<br>';
         console.log('Retrieved data from server: ' + evt);
     };
     //监听连接错误信息
