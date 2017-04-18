@@ -18,7 +18,7 @@ $ws->on('open', function ($ws, $request) {
 //监听WebSocket消息事件
 $ws->on('message', function ($ws, $frame) {
     $msg =  "用户$frame->fd :$frame->data\n";
-    $msg =  json_encode($frame);
+    //$msg =  json_encode($frame);
 //var_dump($GLOBALS['fd']);
 //exit;
     foreach($GLOBALS['fd'] as $aa){
