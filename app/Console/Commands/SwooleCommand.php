@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use App\Handler\Swoole;
 class SwooleCommand extends Command
 {
     /**
@@ -38,10 +38,10 @@ class SwooleCommand extends Command
     public function handle()
     {
         //
-        $ws = new swoole_websocket_server("0.0.0.0", 9505);
-
-
-        $ws->on('open', function ($ws, $request) {
+        $ws = new Swoole("0.0.0.0", 9505);
+        $ws->swoole_start();
+        //$ws = new swoole_websocket_server("0.0.0.0", 9505);
+        /*$ws->on('open', function ($ws, $request) {
             $fd[] = $request->fd;
             $GLOBALS['fd'][] = $fd;
         });
@@ -59,6 +59,6 @@ class SwooleCommand extends Command
             echo "client-{$fd} is closed\n";
         });
 
-        $ws->start();
+        $ws->start();*/
     }
 }
