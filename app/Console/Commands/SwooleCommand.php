@@ -37,28 +37,8 @@ class SwooleCommand extends Command
      */
     public function handle()
     {
-        //
-        /*$ws = new Swoole("0.0.0.0", 9505);
-        $ws->swoole_start();*/
-        $ws = new \swoole_websocket_server("0.0.0.0", 9505);
-        $ws->on('open', function ($ws, $request) {
-            $fd[] = $request->fd;
-            $GLOBALS['fd'][] = $fd;
-        });
 
-        $ws->on('message', function ($ws, $frame) {
-            $msg =  "用户$frame->fd :$frame->data\n";
-            foreach($GLOBALS['fd'] as $aa){
-                foreach($aa as $i){
-                    $ws->push($i,$msg);
-                }
-            }
-        });
-
-        $ws->on('close', function ($ws, $fd) {
-            echo "client-{$fd} is closed\n";
-        });
-
-        $ws->start();
+        $ws = new Swoole("0.0.0.0", 9505);
+        $ws->swoole_start();
     }
 }

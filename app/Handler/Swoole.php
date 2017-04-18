@@ -11,7 +11,7 @@ class Swoole{
     private  $host;
     private  $port;
     public function swoole_start(){
-        $ws = new swoole_websocket_server($this->host, $this->port);
+        $ws = new \swoole_websocket_server($this->host, $this->port);
 
         $ws->on('open', function ($ws, $request) {
             $fd[] = $request->fd;
