@@ -20,8 +20,6 @@
 */
 
 require __DIR__.'/../bootstrap/autoload.php';
-echo 1;
-return;
 /*
 |--------------------------------------------------------------------------
 | Turn On The Lights
@@ -35,7 +33,8 @@ return;
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
-
+echo 1;
+return;
 /*
 |--------------------------------------------------------------------------
 | Run The Application
