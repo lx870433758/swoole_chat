@@ -13,10 +13,7 @@ class Swoole{
     public function swoole_start(){
         $ws = new \swoole_websocket_server($this->host, $this->port);
 
-        $ws->on('open', function ($ws, $request) {
-            $fd[] = $request->fd;
-            $GLOBALS['fd'][] = $fd;
-        });
+        $ws->on('open', $this->open($ws,$request));
 
         $ws->on('message', function ($ws, $frame) {
             $msg =  "用户$frame->fd :$frame->data\n";
@@ -33,8 +30,9 @@ class Swoole{
 
         $ws->start();
     }
-    public function open($ws,$request){
-
+    public function open($ws, $request) {
+        $fd[] = $request->fd;
+        $GLOBALS['fd'][] = $fd;
     }
     public function message($ws,$frame){
 
