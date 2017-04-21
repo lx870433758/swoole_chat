@@ -59,6 +59,20 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(e) {
+	var msg = document.getElementById("message_box");
+	var wsServer = 'ws://106.14.10.215:9505';
+	var websocket = new WebSocket(wsServer);
+	//onopen监听连接打开
+	websocket.onopen = function (evt) {
+		msg.innerHTML = "用户" +websocket.readyState + " 进入聊天室";
+	};
+
+	//onmessage 监听服务器数据推送
+	websocket.onmessage = function (evt) {
+		sendMessage(event, evt.id, to_uid, to_uname,evt.data);
+		console.log('Retrieved data from server: ' + evt);
+	};
+
 	$('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
 	$('.uname').hover(
 	    function(){
@@ -68,7 +82,6 @@ $(document).ready(function(e) {
 		    $('.managerbox').stop(true, true).slideUp(100);
 		}
 	);
-	
 	var fromname = $('#fromname').val();
 	var to_uid   = 0; // 默认为0,表示发送给所有用户
 	var to_uname = '';
@@ -91,7 +104,9 @@ $(document).ready(function(e) {
 	});
 	
 	$('.sub_but').click(function(event){
-	    sendMessage(event, fromname, to_uid, to_uname);
+		var msg = $("#message").val();
+		websocket.send(msg);
+	    sendMessage(event, fromname, to_uid, to_uname,msg);
 	});
 	
 	/*按下按钮或键盘按键*/
@@ -104,8 +119,7 @@ $(document).ready(function(e) {
 		}
 	});
 });
-function sendMessage(event, from_name, to_uid, to_uname){
-    var msg = $("#message").val();
+function sendMessage(event, from_name, to_uid, to_uname ,msg){
 	if(to_uname != ''){
 	    msg = '您对 ' + to_uname + ' 说： ' + msg;
 	}
@@ -119,6 +133,7 @@ function sendMessage(event, from_name, to_uid, to_uname){
 	$("#message_box").append(htmlData);
 	$('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
 	$("#message").val('');
+
 }
 </script>
 </body>
