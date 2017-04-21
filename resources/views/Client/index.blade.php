@@ -69,8 +69,8 @@ $(document).ready(function(e) {
 
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
-		sendMessage(event, "用户"+evt.fd, to_uid, to_uname,evt.data);
-		console.log('Retrieved data from server: ' + evt);
+		sendMessage(event, "用户"+ evt.fd , to_uid, to_uname,evt.data);
+		console.log('Retrieved data from server: ' + evt.fd);
 	};
 
 	$('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
