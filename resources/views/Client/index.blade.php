@@ -62,11 +62,9 @@ $(document).ready(function(e) {
 	var msg = document.getElementById("message_box");
 	var wsServer = 'ws://106.14.10.215:9505';
 	var websocket = new WebSocket(wsServer);
-	var fromname;
 	//onopen监听连接打开
 	websocket.onopen = function (evt) {
-		msg.innerHTML = "用户" +websocket.readyState + " 进入聊天室";
-		fromname = websocket.readyState;
+		//msg.innerHTML = "用户" +websocket.readyState + " 进入聊天室";
 	};
 
 	//onmessage 监听服务器数据推送
@@ -107,7 +105,7 @@ $(document).ready(function(e) {
 	$('.sub_but').click(function(event){
 		var msg = $("#message").val();
 		websocket.send(msg);
-	    sendMessage(event, fromname, to_uid, to_uname,msg);
+	    sendMessage(event, "用户:"+msg.fd, to_uid, to_uname,msg);
 	});
 	
 	/*按下按钮或键盘按键*/
