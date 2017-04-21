@@ -105,7 +105,7 @@ $(document).ready(function(e) {
 	$('.sub_but').click(function(event){
 		var msg = $("#message").val();
 		websocket.send(msg);
-	    sendMessage(event, "用户:"+msg.fd, to_uid, to_uname,msg);
+	    //sendMessage(event, "用户:"+msg.fd, to_uid, to_uname,msg);
 	});
 	
 	/*按下按钮或键盘按键*/

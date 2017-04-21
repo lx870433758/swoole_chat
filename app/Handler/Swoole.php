@@ -23,9 +23,9 @@ class Swoole extends \swoole_websocket_server{
 
             foreach($GLOBALS['fd'] as $aa){
                 foreach($aa as $i){
-                    if($frame->fd != $i){
+                    //if($frame->fd != $i){
                         $ws->push($i,$msg);
-                    }
+                    //}
                 }
             }
         });
