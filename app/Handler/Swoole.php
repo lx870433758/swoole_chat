@@ -19,7 +19,8 @@ class Swoole extends \swoole_websocket_server{
         });
 
         $ws->on('message', function ($ws, $frame) {
-            $msg =  json_encode(['id' =>$frame->id,'data' =>$frame->data]);
+            //$msg =  json_encode(['id' =>$frame->id,'data' =>$frame->data]);
+            $msg =  $frame->data;
 
             foreach($GLOBALS['fd'] as $aa){
                 foreach($aa as $i){
