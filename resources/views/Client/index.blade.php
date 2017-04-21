@@ -109,14 +109,14 @@ $(document).ready(function(e) {
 	});
 	
 	/*按下按钮或键盘按键*/
-	$("#message").keydown(function(event){
+	/*$("#message").keydown(function(event){
 		var e = window.event || event;
         var k = e.keyCode || e.which || e.charCode;
 		//按下ctrl+enter发送消息
 		if((event.ctrlKey && (k == 13 || k == 10) )){
 			sendMessage(event, fromname, to_uid, to_uname);
 		}
-	});
+	});*/
 });
 function sendMessage(event, from_name, to_uid, to_uname ,msg){
 	if(to_uname != ''){
