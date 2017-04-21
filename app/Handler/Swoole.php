@@ -19,7 +19,7 @@ class Swoole extends \swoole_websocket_server{
         });
 
         $ws->on('message', function ($ws, $frame) {
-            $msg =  "用户$frame->fd :$frame->data\n";
+            $msg =  "$frame->data";
             foreach($GLOBALS['fd'] as $aa){
                 foreach($aa as $i){
                     $ws->push($i,$msg);
