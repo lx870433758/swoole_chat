@@ -64,7 +64,7 @@ $(document).ready(function(e) {
 	var websocket = new WebSocket(wsServer);
 	//onopen监听连接打开
 	websocket.onopen = function (evt) {
-		//msg.innerHTML = "用户" +websocket.readyState + " 进入聊天室";
+		msg.innerHTML = "用户" +websocket.readyState + " 进入聊天室";
 	};
 
 	//onmessage 监听服务器数据推送
