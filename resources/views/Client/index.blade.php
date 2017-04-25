@@ -74,7 +74,7 @@ $(document).ready(function(e) {
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
 		sendMessage(event, evt.user_name, to_uid, to_uname,evt.data,evt.avatar);
-		console.log(evt.data);
+		console.log(evt.user_name);
 	};
 	$('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
 	$('.uname').hover(
