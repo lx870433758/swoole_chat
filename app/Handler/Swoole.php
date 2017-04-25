@@ -14,8 +14,7 @@ class Swoole extends \swoole_websocket_server{
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
-            $fd[] = $request->fd;
-            $GLOBALS['fd'][] = $fd;
+            $GLOBALS['fd'][] = $request->fd;
             /*$redis = Redis::connection('user_list');
             $user = Users::find($request->id);
             $user->fd = $request->fd;
@@ -26,12 +25,8 @@ class Swoole extends \swoole_websocket_server{
             //$msg =  json_encode(['id' =>$frame->id,'data' =>$frame->data]);
             $msg =  $frame->data;
 
-            foreach($GLOBALS['fd'] as $aa){
-                foreach($aa as $i){
-                    //if($frame->fd != $i){
-                        $ws->push($i,$msg);
-                    //}
-                }
+            foreach($GLOBALS['fd'] as $i){
+                $ws->push($i,$msg);
             }
         });
 
