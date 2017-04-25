@@ -22,9 +22,7 @@ class Swoole extends \swoole_websocket_server{
         });
 
         $ws->on('message', function ($ws, $frame) {
-            //$msg =  json_encode(['id' =>$frame->id,'data' =>$frame->data]);
-            $msg =  $frame->data;
-
+            $msg =  json_encode(['id' =>$frame->fd,'data' =>$frame->data,'avatar' => '','user_name' => '自定义']);
             foreach($GLOBALS['fd'] as $i){
                 $ws->push($i,$msg);
             }
