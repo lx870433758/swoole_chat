@@ -73,8 +73,8 @@ $(document).ready(function(e) {
 	};
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
-       // var user = eval('(' + evt + ')');
-		//sendMessage(event, user.data.user_name, to_uid, to_uname,user.data.data,user.data.avatar);
+        var user = JSON.parse(evt.data);
+		sendMessage(event, user.user_name, to_uid, to_uname,user.data,user.avatar);
 		console.log(evt);
 	};
 	$('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
