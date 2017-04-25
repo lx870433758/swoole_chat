@@ -75,8 +75,8 @@ $(document).ready(function(e) {
 	};
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
-		sendMessage(event, evt.data.user_name, to_uid, to_uname,evt.data.data,avatar);
-		console.log(evt);
+		sendMessage(event, evt.data.user_name, to_uid, to_uname,evt.data.data,evt.data.avatar);
+		console.log(evt.data);
 	};
 	$('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
 	$('.uname').hover(
