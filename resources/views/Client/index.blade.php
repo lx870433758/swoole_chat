@@ -76,7 +76,7 @@ $(document).ready(function(e) {
 
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
-		sendMessage(event, "用户"+ evt.fd , to_uid, to_uname,evt.data);
+		sendMessage(event, "用户"+ evt.fd , to_uid, to_uname,evt.data,avatar);
 		console.log(evt);
 	};
 
@@ -126,12 +126,12 @@ $(document).ready(function(e) {
 	});*/
 });
 
-function sendMessage(event, from_name, to_uid, to_uname ,msg){
+function sendMessage(event, from_name, to_uid, to_uname ,msg,avatar){
 	if(to_uname != ''){
 	    msg = '您对 ' + to_uname + ' 说： ' + msg;
 	}
 	var htmlData =   '<div class="msg_item fn-clear">'
-                   + '   <div class="uface"><img src="{{ asset('images/hetu.jpg')}}" width="40" height="40"  alt=""/></div>'
+                   + '   <div class="uface"><img src="'+ avatar + '" width="40" height="40"  alt=""/></div>'
 			       + '   <div class="item_right">'
 			       + '     <div class="msg own">' + msg + '</div>'
 			       + '     <div class="name_time">' + from_name + ' · 30秒前</div>'

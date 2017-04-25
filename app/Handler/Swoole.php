@@ -12,11 +12,9 @@ class Swoole extends \swoole_websocket_server{
     public function swoole_start(){
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
-
         $ws->on('open', function ($ws, $request) {
             $fd[] = $request->fd;
             $GLOBALS['fd'][] = $fd;
-            $ws->push($request->fd,$request);
         });
 
         $ws->on('message', function ($ws, $frame) {
