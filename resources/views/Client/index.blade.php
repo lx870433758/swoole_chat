@@ -58,7 +58,7 @@
 $(document).ready(function(e) {
 	var msg = document.getElementById("message_box");
 	var user_list = $('.user_list');
-	var wsServer = 'ws://106.14.10.215:9505';
+	var wsServer = 'ws://106.14.10.215:9505?id={{ $request->user()->id }}';
 	var websocket = new WebSocket(wsServer);
 	var user_html = '<li class="fn-clear" data-id="{{ $request->user()->id }}"><span><img src="{{ $request->user()->avatar }}" width="30" height="30"  alt=""/></span><em>{{ $request->user()->user_name }}</em><small class="online" title="在线"></small></li>';
 	//onopen监听连接打开
