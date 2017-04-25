@@ -76,7 +76,7 @@ $(document).ready(function(e) {
 
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
-		//sendMessage(event, "用户"+ evt.fd , to_uid, to_uname,evt.data);
+		sendMessage(event, "用户"+ evt.fd , to_uid, to_uname,evt.data);
 		console.log(evt);
 	};
 
