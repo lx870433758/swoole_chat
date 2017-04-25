@@ -6,7 +6,8 @@ namespace App\Handler;
  * Date: 2017/4/18
  * Time: 20:35
  */
-
+use Illuminate\Support\Facades\Redis;
+use App\Model\Users;
 class Swoole extends \swoole_websocket_server{
 
     public function swoole_start(){
@@ -15,6 +16,10 @@ class Swoole extends \swoole_websocket_server{
         $ws->on('open', function ($ws, $request) {
             $fd[] = $request->fd;
             $GLOBALS['fd'][] = $fd;
+            /*$redis = Redis::connection('user_list');
+            $user = Users::find($request->id);
+            $user->fd = $request->fd;
+            $redis->set('user:'.$user->id, 'Taylor');*/
         });
 
         $ws->on('message', function ($ws, $frame) {
