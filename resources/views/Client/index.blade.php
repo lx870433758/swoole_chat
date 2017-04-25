@@ -19,7 +19,7 @@
         河图<i class="fontico down"></i>
         <ul class="managerbox">
           <li><a href="#"><i class="fontico lock"></i>修改密码</a></li>
-          <li><a href="#"><i class="fontico logout"></i>退出登录</a></li>
+          <li><a href="/auth/logout"><i class="fontico logout"></i>退出登录</a></li>
         </ul>
       </div>
     </div>
@@ -50,9 +50,6 @@
     <div class="chat_right">
       <ul class="user_list" title="双击用户私聊">
         <li class="fn-clear selected"><em>所有用户</em></li>
-        <li class="fn-clear" data-id="1"><span><img src="{{ asset('images/hetu.jpg')}}" width="30" height="30"  alt=""/></span><em>河图</em><small class="online" title="在线"></small></li>
-        <li class="fn-clear" data-id="2"><span><img src="{{ asset('images/53f44283a4347.jpg')}}" width="30" height="30"  alt=""/></span><em>猫猫</em><small class="online" title="在线"></small></li>
-        <li class="fn-clear" data-id="3"><span><img src="{{ asset('images/53f442834079a.jpg')}}" width="30" height="30"  alt=""/></span><em>白猫</em><small class="offline" title="离线"></small></li>
       </ul>
     </div>
   </div>
@@ -60,16 +57,26 @@
 <script type="text/javascript">
 $(document).ready(function(e) {
 	var msg = document.getElementById("message_box");
+	var user_list = $('.user_list');
 	var wsServer = 'ws://106.14.10.215:9505';
+	var user_name = "{{ $request->user()->user_name }}";
+	var avatar = "{{ $request->user()->avatar }}";
 	var websocket = new WebSocket(wsServer);
+	var user_html = '<li class="fn-clear" data-id="{{ $request->user()->id }}"><span><img src="{{ $request->user()->avatar }}" width="30" height="30"  alt=""/></span><em>{{ $request->user()->user_name }}</em><small class="online" title="在线"></small></li>';
 	//onopen监听连接打开
 	websocket.onopen = function (evt) {
-		msg.innerHTML = "用户" +websocket.readyState + " 进入聊天室";
+		if(websocket.readyState == 1){
+			msg.innerHTML = "欢迎进入聊天室";
+			user_list.append(user_html);
+		}else{
+			msg.innerHTML = "聊天室连接失败";
+		}
+
 	};
 
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
-		sendMessage(event, "用户"+ evt.fd , to_uid, to_uname,evt.data);
+		//sendMessage(event, "用户"+ evt.fd , to_uid, to_uname,evt.data);
 		console.log(evt);
 	};
 
@@ -118,6 +125,7 @@ $(document).ready(function(e) {
 		}
 	});*/
 });
+
 function sendMessage(event, from_name, to_uid, to_uname ,msg){
 	if(to_uname != ''){
 	    msg = '您对 ' + to_uname + ' 说： ' + msg;

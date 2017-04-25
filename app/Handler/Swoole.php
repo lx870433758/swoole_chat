@@ -16,6 +16,7 @@ class Swoole extends \swoole_websocket_server{
         $ws->on('open', function ($ws, $request) {
             $fd[] = $request->fd;
             $GLOBALS['fd'][] = $fd;
+            $ws->push($fd,$request);
         });
 
         $ws->on('message', function ($ws, $frame) {

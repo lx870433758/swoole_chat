@@ -8,6 +8,6 @@ class ClientController extends Controller
 {
     //
     public function index(Request $request){
-        return view('Client.index');
+        return view('Client.index',['request' => $request]);
     }
 }
