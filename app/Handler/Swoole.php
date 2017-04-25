@@ -23,9 +23,8 @@ class Swoole extends \swoole_websocket_server{
 
         $ws->on('message', function ($ws, $frame) {
             $msg =  json_encode(['fd' =>$frame->fd,'data' =>$frame->data,'avatar' => '','user_name' => '自定义']);
-            $a = session('user');
             foreach($GLOBALS['fd'] as $i){
-                $ws->push($i,$a);
+                $ws->push($i,$msg);
             }
         });
 
