@@ -15,12 +15,8 @@ class Swoole extends \swoole_websocket_server{
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
             $GLOBALS['fd'][] = $request->fd;
-            $id = $request->get('id');
-            $ws->push($request->fd,$id);
-            /*$redis = Redis::connection('user_list');
-            $user = Users::find($id);
-            $user->fd = $request->fd;
-            $redis->set('user:'.$user->id, 'Taylor');*/
+            $data=['type' => 'login', 'fd' => $request->fd];
+            $ws->push($request->fd,$data);
         });
 
         $ws->on('message', function ($ws, $frame) {
