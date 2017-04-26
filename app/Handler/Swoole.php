@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Redis;
 use App\Model\Users;
 class Swoole extends \swoole_websocket_server{
 
-    public function swoole_start(){
+    public function  swoole_start(){
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
             $GLOBALS['fd'][] = $request->fd;
+            $ws->push($request->fd,$request);
             /*$redis = Redis::connection('user_list');
             $user = Users::find($request->id);
             $user->fd = $request->fd;

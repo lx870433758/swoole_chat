@@ -14,8 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/client/index','ClientController@index');
-
+Route::group(['middleware' => 'auth.user'], function () {
+    Route::get('/client/index','ClientController@index');
+});
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::get('login', 'LoginController@getLogin');
     Route::post('post_login', 'LoginController@postLogin');

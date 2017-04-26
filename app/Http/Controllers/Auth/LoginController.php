@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 class LoginController extends Controller
 {
@@ -17,6 +18,8 @@ class LoginController extends Controller
     public function postLogin(Request $request){
         $res = $this->validateLogin($request);
         if ($this->attemptLogin($request)) {
+            $redis = Redis::connection();
+            $redis->set("user:".$request->user()->id ,$request->user());
             return $this->sendLoginResponse($request);
         }
         $this->incrementLoginAttempts($request);
@@ -78,6 +81,7 @@ class LoginController extends Controller
         if ($request->expectsJson()) {
             return response()->json($errors, 422);
         }
+
         return redirect()->back()
             ->withInput($request->only($this->username(), 'remember'))
             ->withErrors($errors);
