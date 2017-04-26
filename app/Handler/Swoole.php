@@ -17,7 +17,7 @@ class Swoole extends \swoole_websocket_server{
             $GLOBALS['fd'][] = $request->fd;
             $ws->push($request->fd,$request);
             /*$redis = Redis::connection('user_list');
-            $user = Users::find($request->id);
+            $user = Users::find($id);
             $user->fd = $request->fd;
             $redis->set('user:'.$user->id, 'Taylor');*/
         });
@@ -25,7 +25,7 @@ class Swoole extends \swoole_websocket_server{
         $ws->on('message', function ($ws, $frame) {
             $msg =  json_encode(['fd' =>$frame->fd,'data' =>$frame->data,'avatar' => '','user_name' => '自定义']);
             foreach($GLOBALS['fd'] as $i){
-                $ws->push($i,"哈哈");
+                $ws->push($i,$msg);
             }
         });
 

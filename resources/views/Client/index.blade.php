@@ -58,7 +58,11 @@
 $(document).ready(function(e) {
 	var msg = document.getElementById("message_box");
 	var user_list = $('.user_list');
+<<<<<<< HEAD
 	var wsServer = 'ws://106.14.10.215:9505?id=1';
+=======
+	var wsServer = "ws://106.14.10.215:9505";
+>>>>>>> 0db2fdad473c771a006b19938aba08d0c708c402
 	var websocket = new WebSocket(wsServer);
 	var user_html = '<li class="fn-clear" data-id="{{ $request->user()->id }}"><span><img src="{{ $request->user()->avatar }}" width="30" height="30"  alt=""/></span><em>{{ $request->user()->user_name }}</em><small class="online" title="在线"></small></li>';
 	//onopen监听连接打开
@@ -73,9 +77,15 @@ $(document).ready(function(e) {
 	};
 	//onmessage 监听服务器数据推送
 	websocket.onmessage = function (evt) {
+<<<<<<< HEAD
 		var user = $.parseJSON(evt.data);
 		sendMessage(event, user.user_name, to_uid, to_uname,user.data,user.avatar);
 		console.log(user);
+=======
+        var user = JSON.parse(evt.data);
+		sendMessage(event, user.user_name, to_uid, to_uname,user.data,user.avatar);
+		console.log(evt);
+>>>>>>> 0db2fdad473c771a006b19938aba08d0c708c402
 	};
 	$('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
 	$('.uname').hover(
