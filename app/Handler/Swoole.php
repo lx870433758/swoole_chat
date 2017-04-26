@@ -15,12 +15,12 @@ class Swoole extends \swoole_websocket_server{
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
             $GLOBALS['fd'][] = $request->fd;
-            $userId = $request->data->get->id;
+            //$userId = $request->data->get->id;
             //$userInfo = Users::find($userId);
             //$userInfo->fd = $request->fd;
             //$redis = Redis::connection();
             //$redis->set("user:".$userId ,$userInfo);
-            $ws->push($request->fd,json_encode($userId));
+            $ws->push($request->fd,json_encode($request->data));
         });
 
         $ws->on('message', function ($ws, $frame) {
