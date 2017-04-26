@@ -60,6 +60,7 @@
         var user_list = $('.user_list');
         var wsServer = 'ws://106.14.10.215:9505?id=2';
         var websocket = new WebSocket(wsServer);
+        var img_qian = "{{ env('IMG_URL') }}";
         var user_html = '<li class="fn-clear" data-id="{{ $request->user()->id }}"><span><img src="{{ $request->user()->avatar }}" width="30" height="30"  alt=""/></span><em>{{ $request->user()->user_name }}</em><small class="online" title="在线"></small></li>';
         //onopen监听连接打开
         websocket.onopen = function (evt) {
@@ -79,7 +80,7 @@
                     userBind(info.data.fd,msg);
                     break;
                 case 'msg':
-                    sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, info.data.avatar);
+                    sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg,img_qian + info.data.avatar);
                     break;
                 default:
                     console.log(evt);
@@ -138,7 +139,7 @@
             msg = '您对 ' + to_uname + ' 说： ' + msg;
         }
         var htmlData = '<div class="msg_item fn-clear">'
-                + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
+                + '   <div class="uface"><img src="'  +avatar + '" width="40" height="40"  alt=""/></div>'
                 + '   <div class="item_right">'
                 + '     <div class="msg own">' + msg + '</div>'
                 + '     <div class="name_time">' + from_name + ' · 30秒前</div>'
