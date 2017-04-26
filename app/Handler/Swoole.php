@@ -20,7 +20,9 @@ class Swoole extends \swoole_websocket_server{
         });
 
         $ws->on('message', function ($ws, $frame) {
-            $msg =  json_encode(['type'=>'msg', 'data' =>['fd' =>$frame->fd,'msg' =>$frame->data,'avatar' => '','user_name' => '自定义']]);
+            $redis = Redis::connection();
+            $userInfo = $redis->get('user:'.$frame->fd);
+            $msg =  json_encode(['type'=>'msg', 'data' =>['fd' =>$frame->fd,'msg' =>$frame->data,'avatar' => $userInfo->avatar,'user_name' => $userInfo->user_name]]);
             foreach($GLOBALS['fd'] as $i){
                 $ws->push($i,$msg);
             }
