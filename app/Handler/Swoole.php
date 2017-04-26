@@ -15,8 +15,8 @@ class Swoole extends \swoole_websocket_server{
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
             $GLOBALS['fd'][] = $request->fd;
-            $data=['type' => 'login', 'fd' => $request->fd];
-            $ws->push($request->fd,$data);
+            //$data=json_encode(['type' => 'login', 'fd' => $request->fd]);
+            $ws->push($request->fd,json_encode($request));
         });
 
         $ws->on('message', function ($ws, $frame) {
