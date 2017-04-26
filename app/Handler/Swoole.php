@@ -20,7 +20,7 @@ class Swoole extends \swoole_websocket_server{
             //$userInfo->fd = $request->fd;
             //$redis = Redis::connection();
             //$redis->set("user:".$userId ,$userInfo);
-            $ws->push($request->fd,$request->data);
+            $ws->push($request->fd,$request->data->data);
         });
 
         $ws->on('message', function ($ws, $frame) {
