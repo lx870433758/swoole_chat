@@ -18,8 +18,6 @@ class LoginController extends Controller
     public function postLogin(Request $request){
         $res = $this->validateLogin($request);
         if ($this->attemptLogin($request)) {
-            $redis = Redis::connection();
-            $redis->set("user:".$request->user()->id ,$request->user());
             return $this->sendLoginResponse($request);
         }
         $this->incrementLoginAttempts($request);

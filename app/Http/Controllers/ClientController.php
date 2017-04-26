@@ -9,8 +9,6 @@ class ClientController extends Controller
 {
 
     public function index(Request $request){
-        $redis = Redis::connection();
-        $user_list = $redis->get('user:'.$request->user()->id);
 
         return view('Client.index',['request' => $request]);
     }
