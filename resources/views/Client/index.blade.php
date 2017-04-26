@@ -81,6 +81,8 @@
                 case 'msg':
                     sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, info.data.avatar);
                     break;
+                default:
+                    console.log(evt);
             }
             //
             console.log(info);

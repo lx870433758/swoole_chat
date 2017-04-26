@@ -10,7 +10,6 @@ class ClientController extends Controller
 {
 
     public function index(Request $request){
-
         return view('Client.index',['request' => $request]);
     }
     public function user_bind(Request $request){
