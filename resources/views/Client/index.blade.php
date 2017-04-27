@@ -77,7 +77,7 @@
             var info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'login':
-                    userBind(evt.fd,msg);
+                    userBind(info.data.fd,msg);
                     break;
                 case 'msg':
                     sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
@@ -86,7 +86,7 @@
                     console.log(evt.fd);
             }
             //
-            console.log(info);
+            //console.log(evt.fd);
         };
         $('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
         $('.uname').hover(
@@ -124,7 +124,7 @@
         });
 
         /*按下按钮或键盘按键*/
-        $("#message").keydown(function(event){
+       /* $("#message").keydown(function(event){
          var e = window.event || event;
          var k = e.keyCode || e.which || e.charCode;
          //按下ctrl+enter发送消息
@@ -132,7 +132,7 @@
          sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
          //sendMessage(event, fromname, to_uid, to_uname);
          }
-         });
+         });*/
     });
 
     function sendMessage(event, from_name, to_uid, to_uname, msg, avatar) {
