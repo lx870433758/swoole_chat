@@ -29,8 +29,14 @@ class Swoole extends \swoole_websocket_server{
             }
         });
 
-        $ws->on('close', function ($ws, $request) {
-            echo $request;
+        $ws->on('close', function ($ws, $fd) {
+            $redis = Redis::connection();
+            $userInfo = json_decode($redis->get('user:'.$fd));
+            $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
+            unset($user_list[$userInfo->id]);
+            $redis->set('user_list',json_encode($user_list));
+
+            $redis->delete('user'.$fd);
         });
 
         $ws->start();
