@@ -15,8 +15,16 @@ class Swoole extends \swoole_websocket_server{
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
             $GLOBALS['fd'][] = $request->fd;
+
+            //绑定用户
             $data = json_encode(['type' => 'login' ,'data' => ['fd' =>$request->fd]]);
             $ws->push($request->fd,$data);
+
+            //所有用户更新用户列表
+            $add_user = json_encode(['type' => 'add_user' ,'data' => ['fd' =>$request->fd]]);
+            foreach($GLOBALS['fd'] as $i){
+                $ws->push($i,$add_user);
+            }
         });
 
         $ws->on('message', function ($ws, $frame) {

@@ -36,4 +36,16 @@ class ClientController extends Controller
         }
         return response()->json(['status' => '100']);
     }
+
+    public function get_user_info(Request $request){
+        $fd = $request->input('fd');
+        $redis = Redis::connection();
+        $user = $redis->get('user:'.$fd);
+        if($user){
+            return response()->json(['status' => '100','data' => $user]);
+        }else{
+            return response()->json(['status' => '101','data' => ""]);
+        }
+
+    }
 }

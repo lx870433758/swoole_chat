@@ -93,6 +93,9 @@
                 case 'msg':
                     sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
                     break;
+                case 'add_user':
+                    get_user_info(info.data.fd);
+                    break;
                 default:
                     console.log(evt.fd);
             }
@@ -165,6 +168,12 @@
         $.post("/client/user_bind", {fd: fd},
                 function (data) {
                     msg.innerHTML = "欢迎进入聊天室";
+                });
+    }
+    function get_user_info($fd) {
+        $.post("/client/get_user_info", {fd: fd},
+                function (data) {
+                    console.log(data);
                 });
     }
 </script>
