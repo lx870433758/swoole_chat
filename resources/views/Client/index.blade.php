@@ -58,7 +58,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function (e) {
-        var msg = $('#message_box');
+        var msg = document.getElementById('message_box');
         var user_list = $('.user_list');
         var wsServer = 'ws://106.14.10.215:9505?id={{ $request->user()->id }}';
         var websocket = new WebSocket(wsServer);
@@ -69,7 +69,6 @@
         websocket.onopen = function (evt) {
             if (websocket.readyState == 1) {
                 msg.innerHTML = "正在连接聊天室";
-                //$('.user_list')append(user_html);
             } else {
                 msg.innerHTML = "聊天室连接失败";
             }
@@ -80,10 +79,13 @@
             info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'msg':
-                    sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
+                    sendMessage( info.data.user_name, info.data.msg, img_qian + info.data.avatar);
                     break;
                 case 'add_user':
-                    get_user_info(info.data.fd);
+                    add_user(info.data);
+                    break;
+                case 'del_user':
+                    del_user(info.data);
                     break;
                 default:
                     console.log(evt.fd);
@@ -100,29 +102,9 @@
                     $('.managerbox').stop(true, true).slideUp(100);
                 }
         );
-        var to_uid = 0; // 默认为0,表示发送给所有用户
-        var to_uname = '';
-        $('.user_list > li').dblclick(function () {
-            to_uname = $(this).find('em').text();
-            to_uid = $(this).attr('data-id');
-            if (to_uname == fromname) {
-                alert('您不能和自己聊天!');
-                return false;
-            }
-            if (to_uname == '所有用户') {
-                $("#toname").val('');
-                $('#chat_type').text('群聊');
-            } else {
-                $("#toname").val(to_uid);
-                $('#chat_type').text('您正和 ' + to_uname + ' 聊天');
-            }
-            $(this).addClass('selected').siblings().removeClass('selected');
-            $('#message').focus().attr("placeholder", "您对" + to_uname + "说：");
-        });
 
         $('.sub_but').click(function (event) {
             websocket.send($("#message").val());
-            //sendMessage(event, "用户:"+msg.fd, to_uid, to_uname,msg);
         });
 
         /*按下按钮或键盘按键*/
@@ -137,10 +119,7 @@
         });
     });
 
-    function sendMessage(event, from_name, to_uid, to_uname, msg, avatar) {
-        if (to_uname != '') {
-            msg = '您对 ' + to_uname + ' 说： ' + msg;
-        }
+    function sendMessage(from_name, msg, avatar) {
         var htmlData = '<div class="msg_item fn-clear">'
                 + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
                 + '   <div class="item_right">'
@@ -153,14 +132,14 @@
         $("#message").val('');
 
     }
-    function get_user_info(fd) {
-        $.post("/client/get_user_info", {fd: fd},
-                function (data) {
-                    console.log(data.data);
-                    data = JSON.parse(data.data);
-                    user_html = '<li class="fn-clear" data-id="' + data.id + '"><span><img src="{{ env('IMG_URL') }}/' + data.avatar + '" width="30" height="30"  alt=""/></span><em>' + data.user_name + '</em><small class="online" title="在线"></small></li>';
-                    $('.user_list').append(user_html);
-                });
+
+    function add_user(user_info) {
+        var html_info = '<li class="fn-clear" data-id="user_info.id"><span><img src="{{ env('IMG_URL') }}/'+ user_info.avatar+'" width="30" height="30"  alt=""/></span><em>'+user_info.user_name+'</em><small class="online" title="在线"></small></li>';
+        $('.user_list').append(html_info);
+        document.getElementById('message_box').innerHTML = "欢迎来到聊天室";
+    }
+    function del_user(user_info) {
+        $(".user_list li[data-id='"+user_info.id+"']").remove();
     }
 </script>
 </body>
