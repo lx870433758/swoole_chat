@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Handler\Swoole;
+use Illuminate\Http\Request;
 class SwooleCommand extends Command
 {
     /**
@@ -35,10 +36,10 @@ class SwooleCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(Request $request)
     {
 
         $ws = new Swoole("0.0.0.0", 9505);
-        $ws->swoole_start();
+        $ws->swoole_start($request);
     }
 }
