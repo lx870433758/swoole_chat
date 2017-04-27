@@ -14,9 +14,9 @@
     <div class="chat_top fn-clear">
         <div class="logo"><img src="{{ asset('images/logo.png')}}" width="190" height="60" alt=""/></div>
         <div class="uinfo fn-clear">
-            <div class="uface"><img src="{{ asset('images/hetu.jpg')}}" width="40" height="40" alt=""/></div>
+            <div class="uface"><img src="{{ env('IMG_URL') }}/{{ $request->user()->avatar }}" width="40" height="40" alt=""/></div>
             <div class="uname">
-                河图<i class="fontico down"></i>
+                {{ $request->user()->user_name }}<i class="fontico down"></i>
                 <ul class="managerbox">
                     <li><a href="#"><i class="fontico lock"></i>修改密码</a></li>
                     <li><a href="/auth/logout"><i class="fontico logout"></i>退出登录</a></li>
