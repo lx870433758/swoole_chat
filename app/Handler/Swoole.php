@@ -30,7 +30,7 @@ class Swoole extends \swoole_websocket_server{
         });
 
         $ws->on('close', function ($ws, $request) {
-            echo "client-{$request->fd} is closed\n";
+            echo $request->fd;
         });
 
         $ws->start();
