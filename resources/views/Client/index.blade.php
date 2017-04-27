@@ -62,6 +62,7 @@
         var websocket = new WebSocket(wsServer);
         var img_qian = "{{ env('IMG_URL') }}"+"/";
         var user_html = '<li class="fn-clear" data-id="{{ $request->user()->id }}"><span><img src="'+ img_qian +'{{ $request->user()->avatar }}" width="30" height="30"  alt=""/></span><em>{{ $request->user()->user_name }}</em><small class="online" title="在线"></small></li>';
+        var info;
         //onopen监听连接打开
         websocket.onopen = function (evt) {
             if (websocket.readyState == 1) {
@@ -74,7 +75,7 @@
         };
         //onmessage 监听服务器数据推送
         websocket.onmessage = function (evt) {
-            var info = JSON.parse(evt.data);
+            info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'login':
                     userBind(info.data.fd,msg);
@@ -124,7 +125,7 @@
         });
 
         /*按下按钮或键盘按键*/
-        $("#message").keydown(function(event){
+        $("#message").keydown(function(event,info){
          var e = window.event || event;
          var k = e.keyCode || e.which || e.charCode;
          //按下ctrl+enter发送消息
