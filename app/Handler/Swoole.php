@@ -8,12 +8,15 @@ namespace App\Handler;
  */
 use Illuminate\Support\Facades\Redis;
 use App\Model\Users;
+use Illuminate\Http\Request;
 class Swoole extends \swoole_websocket_server{
 
-    public function  swoole_start(){
+    public function  swoole_start(Request $request){
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
+            echo $request->user()->id;
+            return;
             $GLOBALS['fd'][] = $request->fd;
 
             //绑定用户

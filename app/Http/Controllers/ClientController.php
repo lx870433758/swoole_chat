@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 use App\Model\Users;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Auth;
+
 class ClientController extends Controller
 {
 
     public function index(Request $request){
 
-        $redis = Redis::connection();
-        $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
-        return view('Client.index',['request' => $request,'user_list' =>$user_list]);
+        return view('Client.index',['request' => $request]);
     }
     public function user_bind(Request $request){
         $fd = $request->input('fd');

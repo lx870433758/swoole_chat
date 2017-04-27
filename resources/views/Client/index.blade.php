@@ -14,7 +14,8 @@
     <div class="chat_top fn-clear">
         <div class="logo"><img src="{{ asset('images/logo.png')}}" width="190" height="60" alt=""/></div>
         <div class="uinfo fn-clear">
-            <div class="uface"><img src="{{ env('IMG_URL') }}/{{ $request->user()->avatar }}" width="40" height="40" alt=""/></div>
+            <div class="uface"><img src="{{ env('IMG_URL') }}/{{ $request->user()->avatar }}" width="40" height="40"
+                                    alt=""/></div>
             <div class="uname">
                 {{ $request->user()->user_name }}<i class="fontico down"></i>
                 <ul class="managerbox">
@@ -50,15 +51,6 @@
         <div class="chat_right">
             <ul class="user_list" title="双击用户私聊">
                 <li class="fn-clear selected"><em>所有用户</em></li>
-                @foreach ($user_list as $user)
-                    <li class="fn-clear" data-id="{{ $user['id'] }}">
-                        <span>
-                            <img src="{{ env('IMG_URL') }}/{{ $user['avatar'] }}" width="30" height="30"  alt=""/>
-                        </span>
-                        <em>{{ $user['user_name'] }}</em>
-                        <small class="online" title="在线"></small>
-                    </li>
-                @endforeach
 
             </ul>
         </div>
@@ -66,18 +58,18 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function (e) {
-        var msg = document.getElementById("message_box");
+        var msg = $('#message_box');
         var user_list = $('.user_list');
         var wsServer = 'ws://106.14.10.215:9505?id={{ $request->user()->id }}';
         var websocket = new WebSocket(wsServer);
-        var img_qian = "{{ env('IMG_URL') }}"+"/";
-        var user_html = '<li class="fn-clear" data-id="{{ $request->user()->id }}"><span><img src="'+ img_qian +'{{ $request->user()->avatar }}" width="30" height="30"  alt=""/></span><em>{{ $request->user()->user_name }}</em><small class="online" title="在线"></small></li>';
+        var img_qian = "{{ env('IMG_URL') }}" + "/";
         var info;
+
         //onopen监听连接打开
         websocket.onopen = function (evt) {
             if (websocket.readyState == 1) {
                 msg.innerHTML = "正在连接聊天室";
-                //user_list.append(user_html);
+                //$('.user_list')append(user_html);
             } else {
                 msg.innerHTML = "聊天室连接失败";
             }
@@ -88,7 +80,7 @@
             info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'login':
-                    userBind(info.data.fd,msg);
+                    userBind(info.data.fd, msg);
                     break;
                 case 'msg':
                     sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
@@ -137,15 +129,15 @@
         });
 
         /*按下按钮或键盘按键*/
-        $("#message").keydown(function(event){
-         var e = window.event || event;
-         var k = e.keyCode || e.which || e.charCode;
-         //按下ctrl+enter发送消息
-         if((event.ctrlKey && (k == 13 || k == 10) )){
-             websocket.send($("#message").val());
-         //sendMessage(event, fromname, to_uid, to_uname);
-         }
-         });
+        $("#message").keydown(function (event) {
+            var e = window.event || event;
+            var k = e.keyCode || e.which || e.charCode;
+            //按下ctrl+enter发送消息
+            if ((event.ctrlKey && (k == 13 || k == 10) )) {
+                websocket.send($("#message").val());
+                //sendMessage(event, fromname, to_uid, to_uname);
+            }
+        });
     });
 
     function sendMessage(event, from_name, to_uid, to_uname, msg, avatar) {
@@ -153,7 +145,7 @@
             msg = '您对 ' + to_uname + ' 说： ' + msg;
         }
         var htmlData = '<div class="msg_item fn-clear">'
-                + '   <div class="uface"><img src="'  +avatar + '" width="40" height="40"  alt=""/></div>'
+                + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
                 + '   <div class="item_right">'
                 + '     <div class="msg own">' + msg + '</div>'
                 + '     <div class="name_time">' + from_name + ' · 30秒前</div>'
@@ -164,16 +156,19 @@
         $("#message").val('');
 
     }
-    function userBind(fd,msg) {
+    function userBind(fd, msg) {
         $.post("/client/user_bind", {fd: fd},
                 function (data) {
                     msg.innerHTML = "欢迎进入聊天室";
                 });
     }
-    function get_user_info($fd) {
+    function get_user_info(fd) {
         $.post("/client/get_user_info", {fd: fd},
                 function (data) {
-                    console.log(data);
+                    console.log(data.data);
+                    data = JSON.parse(data.data);
+                    user_html = '<li class="fn-clear" data-id="' + data.id + '"><span><img src="{{ env('IMG_URL') }}/' + data.avatar + '" width="30" height="30"  alt=""/></span><em>' + data.user_name + '</em><small class="online" title="在线"></small></li>';
+                    $('.user_list').append(user_html);
                 });
     }
 </script>
