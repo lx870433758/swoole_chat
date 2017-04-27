@@ -50,6 +50,16 @@
         <div class="chat_right">
             <ul class="user_list" title="双击用户私聊">
                 <li class="fn-clear selected"><em>所有用户</em></li>
+                @foreach ($user_list as $user)
+                    <li class="fn-clear" data-id="{{ $user['id'] }}">
+                        <span>
+                            <img src="{{ env('IMG_URL') }}/{{ $user['avatar'] }}" width="30" height="30"  alt=""/>
+                        </span>
+                        <em>{{ $user['user_name'] }}</em>
+                        <small class="online" title="在线"></small>
+                    </li>
+                @endforeach
+
             </ul>
         </div>
     </div>
@@ -78,7 +88,7 @@
             info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'login':
-                    userBind(info.data.fd,msg,user_html);
+                    userBind(info.data.fd,msg);
                     break;
                 case 'msg':
                     sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
@@ -151,12 +161,10 @@
         $("#message").val('');
 
     }
-    function userBind(fd,msg,user_html) {
+    function userBind(fd,msg) {
         $.post("/client/user_bind", {fd: fd},
                 function (data) {
                     msg.innerHTML = "欢迎进入聊天室";
-                    $('.user_list').append(user_html);
-
                 });
     }
 </script>
