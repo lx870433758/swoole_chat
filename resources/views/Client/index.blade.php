@@ -124,7 +124,7 @@
         });
 
         /*按下按钮或键盘按键*/
-       /* $("#message").keydown(function(event){
+        $("#message").keydown(function(event){
          var e = window.event || event;
          var k = e.keyCode || e.which || e.charCode;
          //按下ctrl+enter发送消息
@@ -132,7 +132,7 @@
          sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
          //sendMessage(event, fromname, to_uid, to_uname);
          }
-         });*/
+         });
     });
 
     function sendMessage(event, from_name, to_uid, to_uname, msg, avatar) {
