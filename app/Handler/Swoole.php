@@ -14,18 +14,20 @@ class Swoole extends \swoole_websocket_server{
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
-            /*$getInfo =  json_encode($request->get);
-            echo $id = $getInfo->id;*/
-            dump($request->get);
-            return;
+
             $GLOBALS['fd'][] = $request->fd;
 
             //绑定用户
-            $data = json_encode(['type' => 'login' ,'data' => ['fd' =>$request->fd]]);
-            $ws->push($request->fd,$data);
+            $getInfo =  $request->get;
+            $id = $getInfo['id'];
+            $userInfo = Users::find($id);
 
-            //所有用户更新用户列表
-            $add_user = json_encode(['type' => 'add_user' ,'data' => ['fd' =>$request->fd]]);
+            $redis = Redis::connection();
+            $redis->set('user:'.$request->fd,$userInfo);
+
+            //添加用户到所有用户列表
+            $userInfo->fd = $request->fd;
+            $add_user = json_encode(['type' => 'add_user' ,'data' => $userInfo]);
             foreach($GLOBALS['fd'] as $i){
                 $ws->push($i,$add_user);
             }
@@ -43,11 +45,14 @@ class Swoole extends \swoole_websocket_server{
 
         $ws->on('close', function ($ws, $fd) {
             $redis = Redis::connection();
-            $userInfo = json_decode($redis->get('user:'.$fd));
-            $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
-            unset($user_list[$userInfo->id]);
-            echo $userInfo->id;
-            $redis->set('user_list',json_encode($user_list));
+            $uesrinfo = $redis->get('user:'.$fd);
+            $uesrinfo = json_decode($uesrinfo);
+
+            //删除用户到所有用户列表
+            $del_user = json_encode(['type' => 'del_user' ,'data' => $uesrinfo]);
+            foreach($GLOBALS['fd'] as $i){
+                $ws->push($i,$del_user);
+            }
         });
 
         $ws->start();

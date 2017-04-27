@@ -79,9 +79,6 @@
         websocket.onmessage = function (evt) {
             info = JSON.parse(evt.data);
             switch (info.type) {
-                case 'login':
-                    userBind(info.data.fd, msg);
-                    break;
                 case 'msg':
                     sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
                     break;
@@ -155,12 +152,6 @@
         $('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
         $("#message").val('');
 
-    }
-    function userBind(fd, msg) {
-        $.post("/client/user_bind", {fd: fd},
-                function (data) {
-                    msg.innerHTML = "欢迎进入聊天室";
-                });
     }
     function get_user_info(fd) {
         $.post("/client/get_user_info", {fd: fd},
