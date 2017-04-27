@@ -58,7 +58,7 @@
     $(document).ready(function (e) {
         var msg = document.getElementById("message_box");
         var user_list = $('.user_list');
-        var wsServer = 'ws://106.14.10.215:9505?id=2';
+        var wsServer = 'ws://106.14.10.215:9505?id={{ $request->user()->id }}';
         var websocket = new WebSocket(wsServer);
         var img_qian = "{{ env('IMG_URL') }}";
         var user_html = '<li class="fn-clear" data-id="{{ $request->user()->id }}"><span><img src="{{ $request->user()->avatar }}" width="30" height="30"  alt=""/></span><em>{{ $request->user()->user_name }}</em><small class="online" title="在线"></small></li>';
@@ -80,7 +80,7 @@
                     userBind(info.data.fd,msg);
                     break;
                 case 'msg':
-                    sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg,img_qian + info.data.avatar);
+                    sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
                     break;
                 default:
                     console.log(evt);
