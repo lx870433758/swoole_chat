@@ -35,7 +35,7 @@ class SwooleCommand extends Command
      *
      * @return mixed
      */
-    public function handle(Request $request)
+    public function handle()
     {
 
         $ws = new Swoole("0.0.0.0", 9505);
