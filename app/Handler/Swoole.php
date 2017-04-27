@@ -14,8 +14,9 @@ class Swoole extends \swoole_websocket_server{
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
-            $getInfo =  json_decode($request->get);
-            echo $id = $getInfo->id;
+            /*$getInfo =  json_encode($request->get);
+            echo $id = $getInfo->id;*/
+            dump($request->get);
             return;
             $GLOBALS['fd'][] = $request->fd;
 
