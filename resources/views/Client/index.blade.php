@@ -67,7 +67,7 @@
         websocket.onopen = function (evt) {
             if (websocket.readyState == 1) {
                 msg.innerHTML = "正在连接聊天室";
-                user_list.append(user_html);
+                //user_list.append(user_html);
             } else {
                 msg.innerHTML = "聊天室连接失败";
             }
@@ -78,7 +78,7 @@
             info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'login':
-                    userBind(info.data.fd,msg);
+                    userBind(info.data.fd,msg,user_html);
                     break;
                 case 'msg':
                     sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
@@ -119,18 +119,17 @@
         });
 
         $('.sub_but').click(function (event) {
-            var msg = $("#message").val();
-            websocket.send(msg);
+            websocket.send($("#message").val());
             //sendMessage(event, "用户:"+msg.fd, to_uid, to_uname,msg);
         });
 
         /*按下按钮或键盘按键*/
-        $("#message").keydown(function(event,info){
+        $("#message").keydown(function(event){
          var e = window.event || event;
          var k = e.keyCode || e.which || e.charCode;
          //按下ctrl+enter发送消息
          if((event.ctrlKey && (k == 13 || k == 10) )){
-         sendMessage(event, info.data.user_name, to_uid, to_uname, info.data.msg, img_qian + info.data.avatar);
+             websocket.send($("#message").val());
          //sendMessage(event, fromname, to_uid, to_uname);
          }
          });
@@ -152,10 +151,12 @@
         $("#message").val('');
 
     }
-    function userBind(fd,msg) {
+    function userBind(fd,msg,user_html) {
         $.post("/client/user_bind", {fd: fd},
                 function (data) {
                     msg.innerHTML = "欢迎进入聊天室";
+                    $('.user_list').append(user_html);
+
                 });
     }
 </script>
