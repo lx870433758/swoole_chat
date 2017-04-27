@@ -35,8 +35,6 @@ class Swoole extends \swoole_websocket_server{
             $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
             unset($user_list[$userInfo->id]);
             $redis->set('user_list',json_encode($user_list));
-
-            $redis->delete('user'.$fd);
         });
 
         $ws->start();
