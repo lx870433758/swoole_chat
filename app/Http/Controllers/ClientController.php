@@ -15,9 +15,8 @@ class ClientController extends Controller
     public function user_bind(Request $request){
         $fd = $request->input('fd');
         $redis = Redis::connection();
-        $request->user()->fd = $fd;
-        $redis->set('user:'.$request->user()->fd,$request->user());
-        if(!$redis->exists('user:'.$request->user()->id)){
+        $redis->set('user:'.$fd,$request->user());
+        if(!$redis->exists('user:'.$fd)){
             return response()->json(['status' => '101']);
         }
         return response()->json(['status' => '100']);
