@@ -8,14 +8,13 @@ namespace App\Handler;
  */
 use Illuminate\Support\Facades\Redis;
 use App\Model\Users;
-use Illuminate\Http\Request;
 class Swoole extends \swoole_websocket_server{
 
-    public function  swoole_start(Request $request){
+    public function  swoole_start(){
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
-            echo $request->user()->id;
+            echo json_encode($request);
             return
             $GLOBALS['fd'][] = $request->fd;
 
