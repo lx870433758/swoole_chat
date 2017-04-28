@@ -67,7 +67,10 @@ class Swoole extends \swoole_websocket_server{
             $del_user = json_encode(['type' => 'del_user' ,'data' => $uesrinfo]);
             $fd_list = $redis->exists('fd_list') ? json_decode($redis->get('fd_list'),true): [];
             foreach($fd_list as $i){
-                $ws->push($i,$del_user);
+                if($fd != $i){
+                    $ws->push($i,$del_user);
+                }
+
             }
         });
 
