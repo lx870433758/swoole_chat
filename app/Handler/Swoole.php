@@ -63,6 +63,11 @@ class Swoole extends \swoole_websocket_server{
             //// 用户列表删除用户
             $user_list = json_decode($redis->get('user_list'),true);
             unset($user_list[$uesrinfo->id]);
+            if($user_list[$uesrinfo->id]){
+                echo "删除失败";
+            }else{
+                echo "删除成功";
+            }
             $redis->set('user_list', json_encode($user_list)) ;
             echo "$uesrinfo->id 用户列表删除用户";
 
