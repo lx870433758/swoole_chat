@@ -11,8 +11,9 @@ class ClientController extends Controller
 {
 
     public function index(Request $request){
-        
-        return view('Client.index',['request' => $request]);
+        $redis = Redis::connection();
+        $user_list = json_decode($redis->get('user_list'),true);
+        return view('Client.index',['request' => $request,'user_list' => $user_list]);
     }
     public function user_bind(Request $request){
         
