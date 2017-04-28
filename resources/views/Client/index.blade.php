@@ -52,9 +52,9 @@
             <ul class="user_list"  title="双击用户私聊">
                 <li class="fn-clear selected"><em>所有用户</em></li>
                 @foreach ($user_list as $user)
-                    <li class="fn-clear" data-id="{{$user->id}}">
-                        <span><img src="{{ env('IMG_URL') }}/{{$user->avatar}}" width="30" height="30"  alt=""/></span>
-                        <em>{{$user->user_name}}</em>
+                    <li class="fn-clear" data-id="{{$user['id']}}">
+                        <span><img src="{{ env('IMG_URL') }}/{{$user['avatar']}}" width="30" height="30"  alt=""/></span>
+                        <em>{{$user['user_name']}}</em>
                         <small class="online" title="在线"></small>
                     </li>
                 @endforeach
