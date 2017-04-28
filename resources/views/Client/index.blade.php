@@ -129,7 +129,7 @@
         if(to_uid == "{{$request->user()->id}}"){
             var html_msg = '<div class="msg own">' + msg + '</div>';
         }else {
-            var html_msg = '<div class="msg own" style="background-color: #2e6da4">' + msg + '</div>';
+            var html_msg = '<div class="msg own" style="background-color: royalblue">' + msg + '</div>';
         }
         var htmlData = '<div class="msg_item fn-clear">'
                 + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
