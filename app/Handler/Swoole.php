@@ -19,13 +19,14 @@ class Swoole extends \swoole_websocket_server{
             $fd_list = $redis->exists('fd_list') ? json_decode($redis->get('fd_list'),true): [];
             $fd_list[]=$request->fd;
             $redis->set('fd_list',json_encode($fd_list));
+            echo "$request->fd 加入fd列表成功";
 
             //绑定用户
             $getInfo =  $request->get;
             $id = $getInfo['id'];
             $userInfo = Users::find($id);
             $redis->set('user:'.$request->fd,$userInfo);
-
+            echo "$request->fd 绑定用户成功";
             //更新用户列表
             $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
             $user_list[$id] = $userInfo;
@@ -40,6 +41,7 @@ class Swoole extends \swoole_websocket_server{
                 //}
 
             }
+            echo "$request->fd 添加用户到所有用户列表";
         });
 
         $ws->on('message', function ($ws, $frame) {
@@ -58,12 +60,13 @@ class Swoole extends \swoole_websocket_server{
             $uesrinfo = $redis->get('user:'.$fd);
             $uesrinfo = json_decode($uesrinfo);
 
-            //更新用户列表
+            ////删除用户到所有用户列表
             $user_list = json_decode($redis->get('user_list'),true);
             unset($user_list[$uesrinfo->id]);
             $redis->set('user_list', json_encode($user_list)) ;
+            echo "$fd 删除用户到所有用户列表";
 
-            //删除用户到所有用户列表
+            //推送
             $del_user = json_encode(['type' => 'del_user' ,'data' => $uesrinfo]);
             $fd_list = $redis->exists('fd_list') ? json_decode($redis->get('fd_list'),true): [];
             foreach($fd_list as $i){
@@ -72,6 +75,7 @@ class Swoole extends \swoole_websocket_server{
                 }
 
             }
+            echo "$fd 退出成功";
         });
 
         $ws->start();
