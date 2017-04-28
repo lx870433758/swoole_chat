@@ -18,8 +18,6 @@ class ClientController extends Controller
             unset($user_list[$request->user()->id]);
         }
         $redis->set('user_list', json_encode($user_list)) ;
-        dump($user_list);
-        return;
         return view('Client.index',['request' => $request,'user_list' => $user_list]);
     }
     public function user_bind(Request $request){
