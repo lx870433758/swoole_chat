@@ -19,6 +19,8 @@ class ClientController extends Controller
         if($user_list->$id){
             unset($user_list->$id);
         }
+        dump($user_list);
+        return;
         return view('Client.index',['request' => $request,'user_list' => $user_list]);
     }
     public function user_bind(Request $request){
