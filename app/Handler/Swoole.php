@@ -47,7 +47,8 @@ class Swoole extends \swoole_websocket_server{
             $userInfo = $redis->get('user:'.$frame->fd);
             $userInfo = json_decode($userInfo);
             $msg =  json_encode(['type'=>'msg', 'data' =>['fd' =>$frame->fd,'msg' =>$frame->data,'avatar' => $userInfo->avatar,'user_name' => $userInfo->user_name]]);
-            foreach($GLOBALS['fd'] as $i){
+            $fd_list = $redis->exists('fd_list') ? json_decode($redis->get('fd_list'),true): [];
+            foreach($fd_list as $i){
                 $ws->push($i,$msg);
             }
         });
