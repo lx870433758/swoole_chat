@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="chat_right">
-            <ul class="user_list" title="双击用户私聊">
+            <ul class="user_list"  title="双击用户私聊">
                 <li class="fn-clear selected"><em>所有用户</em></li>
                 @foreach ($user_list as $user)
                     <li class="fn-clear" data-id="{{$user->id}}">
@@ -128,18 +128,20 @@
     function sendMessage(data) {
 
         if(data.id == "{{$request->user()->id}}"){
+            var html_float = '<div style="float: right;with:100%" class="msg_item fn-clear">';
             var html_msg = '<div class="msg own" style="background-color: powderblue">' + data.msg + '</div>';
         }else {
-
+            var html_float = '<div class="msg_item fn-clear">';
             var html_msg = '<div class="msg own">' + data.msg + '</div>';
         }
-        var htmlData = '<div class="msg_item fn-clear">'
+        var htmlData = html_float
                 + '   <div class="uface"><img src="{{ env('IMG_URL') }}/' + data.avatar + '" width="40" height="40"  alt=""/></div>'
                 + '   <div class="item_right">'
                 + html_msg
                 + '     <div class="name_time">' + data.user_name + ' · '+data.time +'</div>'
                 + '   </div>'
-                + '</div>';
+                + '</div><div style="clear: both"></div>';
+
         $("#message_box").append(htmlData);
         $('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
         $("#message").val('');
