@@ -130,6 +130,7 @@
         if(data.id == "{{$request->user()->id}}"){
             var html_float = '<div style="float: right;with:100%" class="msg_item fn-clear">';
             var html_msg = '<div class="msg own" style="background-color: powderblue">' + data.msg + '</div>';
+            $("#message").val('');
         }else {
             var html_float = '<div class="msg_item fn-clear">';
             var html_msg = '<div class="msg own">' + data.msg + '</div>';
@@ -144,7 +145,7 @@
 
         $("#message_box").append(htmlData);
         $('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
-        $("#message").val('');
+
 
     }
 
