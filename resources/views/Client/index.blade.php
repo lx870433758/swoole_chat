@@ -85,7 +85,7 @@
             info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'msg':
-                    sendMessage(info.data.id, info.data.user_name, info.data.msg, img_qian + info.data.avatar);
+                    sendMessage(info.data);
                     break;
                 case 'add_user':
                     add_user(info.data);
@@ -125,17 +125,19 @@
         });
     });
 
-    function sendMessage(to_uid,from_name, msg, avatar) {
-        if(to_uid == "{{$request->user()->id}}"){
-            var html_msg = '<div class="msg own" style="background-color: powderblue">' + msg + '</div>';
+    function sendMessage(data) {
+
+        if(data.id == "{{$request->user()->id}}"){
+            var html_msg = '<div class="msg own" style="background-color: powderblue">' + data.msg + '</div>';
         }else {
-            var html_msg = '<div class="msg own">' + msg + '</div>';
+
+            var html_msg = '<div class="msg own">' + data.msg + '</div>';
         }
         var htmlData = '<div class="msg_item fn-clear">'
-                + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
+                + '   <div class="uface"><img src="{{ env('IMG_URL') }}/' + data.avatar + '" width="40" height="40"  alt=""/></div>'
                 + '   <div class="item_right">'
                 + html_msg
-                + '     <div class="name_time">' + from_name + ' · {{ date('H:i:s' ,time())}}</div>'
+                + '     <div class="name_time">' + data.user_name + ' · '+data.time +'</div>'
                 + '   </div>'
                 + '</div>';
         $("#message_box").append(htmlData);
@@ -152,7 +154,7 @@
     function del_user(user_info) {
         console.log(user_info.id);
         $(".user_list li[data-id='"+user_info.id+"']").remove();
-        var html_coloes = '<h1>'+ user_info.user_name+'退出聊天室<h1>'
+        var html_coloes = '<h1 style="font-size: 12px;color: #7E90A5;">'+ user_info.user_name+'退出聊天室<h1>'
         $('#message_box').append(html_coloes);
     }
 </script>
