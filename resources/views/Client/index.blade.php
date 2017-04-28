@@ -74,7 +74,7 @@
         //onopen监听连接打开
         websocket.onopen = function (evt) {
             if (websocket.readyState == 1) {
-                msg.innerHTML = "正在连接聊天室";
+                msg.innerHTML = "欢迎来到聊天室";
             } else {
                 msg.innerHTML = "聊天室连接失败";
             }
