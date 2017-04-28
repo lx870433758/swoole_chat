@@ -26,7 +26,7 @@ class Swoole extends \swoole_websocket_server{
             $redis->set('user:'.$request->fd,$userInfo);
 
             //更新用户列表
-            $user_list = $redis->exists('user_list') ? json_decode($redis->exists('user_list')): [];
+            $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
             $user_list[$id] = $userInfo;
             $redis->set('user_list', json_encode($user_list)) ;
 
@@ -54,7 +54,7 @@ class Swoole extends \swoole_websocket_server{
             $uesrinfo = json_decode($uesrinfo);
 
             //更新用户列表
-            $user_list = json_decode($redis->get('user_list'));
+            $user_list = json_decode($redis->get('user_list'),true);
             unset($user_list[$uesrinfo->id]);
             $redis->set('user_list', json_encode($user_list)) ;
 
