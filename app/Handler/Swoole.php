@@ -25,6 +25,11 @@ class Swoole extends \swoole_websocket_server{
             $redis = Redis::connection();
             $redis->set('user:'.$request->fd,$userInfo);
 
+            //更新用户列表
+            $user_list = $redis->exists('user_list') ? json_decode($redis->exists('user_list')): [];
+            $user_list[$id] = $userInfo;
+            $redis->set('user_list', json_encode($user_list)) ;
+
             //添加用户到所有用户列表
             $userInfo->fd = $request->fd;
             $add_user = json_encode(['type' => 'add_user' ,'data' => $userInfo]);
@@ -47,6 +52,11 @@ class Swoole extends \swoole_websocket_server{
             $redis = Redis::connection();
             $uesrinfo = $redis->get('user:'.$fd);
             $uesrinfo = json_decode($uesrinfo);
+
+            //更新用户列表
+            $user_list = json_decode($redis->get('user_list'));
+            unset($user_list[$uesrinfo->id]);
+            $redis->set('user_list', json_encode($user_list)) ;
 
             //删除用户到所有用户列表
             $del_user = json_encode(['type' => 'del_user' ,'data' => $uesrinfo]);
