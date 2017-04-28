@@ -140,7 +140,7 @@
     }
 
     function add_user(user_info) {
-        var html_info = '<li class="fn-clear" data-id="user_info.id"><span><img src="{{ env('IMG_URL') }}/'+ user_info.avatar+'" width="30" height="30"  alt=""/></span><em>'+user_info.user_name+'</em><small class="online" title="在线"></small></li>';
+        var html_info = '<li class="fn-clear" data-id="'+user_info.id+'"><span><img src="{{ env('IMG_URL') }}/'+ user_info.avatar+'" width="30" height="30"  alt=""/></span><em>'+user_info.user_name+'</em><small class="online" title="在线"></small></li>';
         $('.user_list').append(html_info);
         document.getElementById('message_box').innerHTML = "欢迎来到聊天室";
     }
