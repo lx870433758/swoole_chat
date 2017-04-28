@@ -135,7 +135,7 @@
                 + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
                 + '   <div class="item_right">'
                 + html_msg
-                + '     <div class="name_time">' + from_name + ' · '+ myDate.toLocaleTimeString() + '</div>'
+                + '     <div class="name_time">' + from_name + ' · {{ date('H:i:s' ,time())}}</div>'
                 + '   </div>'
                 + '</div>';
         $("#message_box").append(htmlData);
