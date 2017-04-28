@@ -13,12 +13,11 @@ class ClientController extends Controller
     public function index(Request $request){
 
         $redis = Redis::connection();
-        $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list')): (object)array();
-        $id = $request->user()->id;
-
-        if($user_list->$id){
-            unset($user_list->$id);
+        $user_list = json_decode($redis->get('user_list'),true);
+        if(isset($user_list[$request->user()->id])){
+            unset($user_list[$request->user()->id]);
         }
+        $redis->set('user_list', json_encode($user_list)) ;
         dump($user_list);
         return;
         return view('Client.index',['request' => $request,'user_list' => $user_list]);
