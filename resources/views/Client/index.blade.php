@@ -28,7 +28,7 @@
     <div class="chat_message fn-clear">
         <div class="chat_left">
             <div class="message_box" id="message_box">
-
+                <h1 id="title_box"></h1>
                 {{--<div class="msg_item fn-clear">
                   <div class="uface"><img src="{{ asset('images/hetu.jpg')}}" width="40" height="40"  alt=""/></div>
                   <div class="item_right">
@@ -64,7 +64,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function (e) {
-        var msg = document.getElementById('message_box');
+        var msg = document.getElementById('title_box');
         var user_list = $('.user_list');
         var wsServer = 'ws://106.14.10.215:9505?id={{ $request->user()->id }}';
         var websocket = new WebSocket(wsServer);
@@ -142,11 +142,13 @@
     function add_user(user_info) {
         var html_info = '<li class="fn-clear" data-id="'+user_info.id+'"><span><img src="{{ env('IMG_URL') }}/'+ user_info.avatar+'" width="30" height="30"  alt=""/></span><em>'+user_info.user_name+'</em><small class="online" title="在线"></small></li>';
         $('.user_list').append(html_info);
-        document.getElementById('message_box').innerHTML = "欢迎来到聊天室";
+        document.getElementById('title_box').innerHTML = "欢迎来到聊天室";
     }
     function del_user(user_info) {
         console.log(user_info.id);
         $(".user_list li[data-id='"+user_info.id+"']").remove();
+        var html_coloes = '<h1>'+ user_info.user_name+'退出聊天室<h1>'
+        $('#message_box').append(html_coloes);
     }
 </script>
 </body>
