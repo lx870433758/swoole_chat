@@ -15,8 +15,8 @@ class ClientController extends Controller
         $redis = Redis::connection();
         $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list')): [];
         $id = $request->user()->id;
-   
-        dump($user_list[9]);
+
+        dump($user_list->$id);
         return;
         if($user_list->$id){
             unset($user_list->$id);
