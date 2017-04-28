@@ -127,9 +127,9 @@
 
     function sendMessage(to_uid,from_name, msg, avatar) {
         if(to_uid == "{{$request->user()->id}}"){
-            var html_msg = '<div class="msg own">' + msg + '</div>';
-        }else {
             var html_msg = '<div class="msg own" style="background-color: powderblue">' + msg + '</div>';
+        }else {
+            var html_msg = '<div class="msg own">' + msg + '</div>';
         }
         var htmlData = '<div class="msg_item fn-clear">'
                 + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
