@@ -110,7 +110,11 @@
         );
 
         $('.sub_but').click(function (event) {
-            websocket.send($("#message").val());
+            var msg = $("#message").val();
+            if(!msg){
+                return;
+            }
+            websocket.send(msg);
         });
 
         /*按下按钮或键盘按键*/
@@ -119,7 +123,11 @@
             var k = e.keyCode || e.which || e.charCode;
             //按下ctrl+enter发送消息
             if ((event.ctrlKey && (k == 13 || k == 10) )) {
-                websocket.send($("#message").val());
+                var msg = $("#message").val();
+                if(!msg){
+                    return;
+                }
+                websocket.send(msg);
                 //sendMessage(event, fromname, to_uid, to_uname);
             }
         });
