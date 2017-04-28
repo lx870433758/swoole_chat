@@ -85,7 +85,7 @@
             info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'msg':
-                    sendMessage( info.data.user_name, info.data.msg, img_qian + info.data.avatar);
+                    sendMessage(info.data.id, info.data.user_name, info.data.msg, img_qian + info.data.avatar);
                     break;
                 case 'add_user':
                     add_user(info.data);
@@ -125,12 +125,17 @@
         });
     });
 
-    function sendMessage(from_name, msg, avatar) {
+    function sendMessage(to_uid,from_name, msg, avatar) {
+        if(to_uid == "{{$request->user()->id}}"){
+            var html_msg = '<div class="msg own">' + msg + '</div>';
+        }else {
+            var html_msg = '<div class="msg own" style="background-color: #2e6da4">' + msg + '</div>';
+        }
         var htmlData = '<div class="msg_item fn-clear">'
                 + '   <div class="uface"><img src="' + avatar + '" width="40" height="40"  alt=""/></div>'
                 + '   <div class="item_right">'
-                + '     <div class="msg own">' + msg + '</div>'
-                + '     <div class="name_time">' + from_name + ' · 30秒前</div>'
+                + html_msg
+                + '     <div class="name_time">' + from_name + ' · '+ myDate.toLocaleTimeString() + '</div>'
                 + '   </div>'
                 + '</div>';
         $("#message_box").append(htmlData);
