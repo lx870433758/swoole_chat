@@ -145,7 +145,7 @@
         document.getElementById('message_box').innerHTML = "欢迎来到聊天室";
     }
     function del_user(user_info) {
-        console.log(user_info);
+        console.log(user_info.id);
         $(".user_list li[data-id='"+user_info.id+"']").remove();
     }
 </script>
