@@ -34,9 +34,9 @@ class Swoole extends \swoole_websocket_server{
             $userInfo->fd = $request->fd;
             $add_user = json_encode(['type' => 'add_user' ,'data' => $userInfo]);
             foreach($GLOBALS['fd'] as $i){
-                if($i != $request->fd){
+                //if($i != $request->fd){
                     $ws->push($i,$add_user);
-                }
+                //}
 
             }
         });
