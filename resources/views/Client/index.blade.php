@@ -122,7 +122,7 @@
             var e = window.event || event;
             var k = e.keyCode || e.which || e.charCode;
             //按下ctrl+enter发送消息
-            if ((event.ctrlKey && (k == 13 || k == 10) )) {
+            if ((k == 13 || k == 10) ) {
                 var msg = $("#message").val();
                 if(!msg){
                     return;
