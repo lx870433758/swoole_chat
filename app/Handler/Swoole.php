@@ -39,7 +39,7 @@ class Swoole extends \swoole_websocket_server{
             //添加用户到所有用户列表
             $userInfo->fd = $request->fd;
             $add_user = json_encode(['type' => 'add_user' ,'data' => $userInfo]);
-            if($checkAdd ==1){
+            if($checkAdd ==0){
                 foreach($fd_list as $i){
                     $ws->push($i,$add_user);
                 }
