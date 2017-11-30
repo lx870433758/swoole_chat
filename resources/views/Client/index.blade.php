@@ -84,6 +84,7 @@
         websocket.onmessage = function (evt) {
             //info = JSON.parse(evt.data);
             info = evt;
+            console.log(info.type);
             switch (info.type) {
                 case 'msg':
                     sendMessage(info.data);
