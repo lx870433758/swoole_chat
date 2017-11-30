@@ -66,7 +66,7 @@
     $(document).ready(function (e) {
         var msg = document.getElementById('title_box');
         var user_list = $('.user_list');
-        var wsServer = 'ws://127.0.0.1:9505?id={{ $request->user()->id }}';
+        var wsServer = 'ws://106.14.10.215:9505?id={{ $request->user()->id }}';
         var websocket = new WebSocket(wsServer);
         var img_qian = "{{ env('IMG_URL') }}" + "/";
         var info;
