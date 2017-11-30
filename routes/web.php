@@ -11,10 +11,11 @@
 |
 */
 
-
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::group(['middleware' => 'auth.user'], function () {
     Route::get('/client/index','ClientController@index');
-    Route::get('/','ClientController@index');
     Route::post('/client/user_bind','ClientController@user_bind');
     Route::post('/client/get_user_info','ClientController@get_user_info');
 });
