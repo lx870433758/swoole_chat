@@ -16,6 +16,7 @@ class ClientController extends Controller
         /*$checkAdd = empty($user_list[$id]) || $user_list[$id] =='[]' ? 1:0;
         $user_list[$id] = $userInfo;
         $redis->set('user_list', json_encode($user_list)) ;*/
+        var_dump($user_list);
         return $user_list;
         $redis = Redis::connection();
         $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
