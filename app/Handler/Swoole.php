@@ -9,7 +9,8 @@ namespace App\Handler;
 use Illuminate\Support\Facades\Redis;
 use App\Model\Users;
 class Swoole extends \swoole_websocket_server{
-
+    protected $host;
+    protected $port;
     public function  swoole_start(){
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
