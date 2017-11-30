@@ -15,26 +15,25 @@ class Swoole extends \swoole_websocket_server{
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
-            echo "$request->fd 加入";
+            echo "$request->fd 加入|";
             $redis = Redis::connection();
             //更新fd列表
             $fd_list = $redis->exists('fd_list') ? json_decode($redis->get('fd_list'),true): [];
             $fd_list[]=$request->fd;
             $redis->set('fd_list',json_encode($fd_list));
-            echo "$request->fd 加入fd列表成功";
+            echo "$request->fd 加入fd列表成功|";
 
             //绑定用户
             $getInfo =  $request->get;
             $id = $getInfo['id'];
             $userInfo = Users::find($id);
             $redis->set('user:'.$request->fd,$userInfo);
-            echo "$request->fd 绑定用户成功";
+            echo "fd:$request->fd 绑定用户$id 成功";
 
             //更新用户列表
             $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
             $checkAdd = empty($user_list[$id]) ? 1 :0;
             $user_list[$id] = $userInfo;
-
             $redis->set('user_list', json_encode($user_list)) ;
 
             //添加用户到所有用户列表
