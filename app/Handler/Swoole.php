@@ -14,6 +14,7 @@ class Swoole extends \swoole_websocket_server{
 
         $ws = new \swoole_websocket_server($this->host, $this->port);
         $ws->on('open', function ($ws, $request) {
+            echo "$request->fd 加入";
             $redis = Redis::connection();
             //更新fd列表
             $fd_list = $redis->exists('fd_list') ? json_decode($redis->get('fd_list'),true): [];
