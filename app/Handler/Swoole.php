@@ -32,19 +32,19 @@ class Swoole extends \swoole_websocket_server{
 
             //更新用户列表
             $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
-            $checkAdd = $user_list[$id] ? 1:0;
+            $checkAdd = empty($user_list[$id]) || $user_list[$id] =='[]' ? 1:0;
             $user_list[$id] = $userInfo;
             $redis->set('user_list', json_encode($user_list)) ;
 
             //添加用户到所有用户列表
             $userInfo->fd = $request->fd;
             $add_user = json_encode(['type' => 'add_user' ,'data' => $userInfo]);
-            if($checkAdd ==0){
+            if($checkAdd ==1){
                 foreach($fd_list as $i){
                     $ws->push($i,$add_user);
                 }
             }
-            echo " 用户 $id 是否登录$checkAdd \n";
+            echo " 用户 $id 是否未登录$checkAdd \n";
         });
 
         $ws->on('message', function ($ws, $frame) {
