@@ -82,8 +82,8 @@
         };
         //onmessage 监听服务器数据推送
         websocket.onmessage = function (evt) {
-            //info = JSON.parse(evt.data);
-            info = evt;
+            info = JSON.parse(evt.data);
+            //info = evt;
             console.log(info.type);
             switch (info.type) {
                 case 'msg':
