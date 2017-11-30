@@ -44,7 +44,7 @@ class Swoole extends \swoole_websocket_server{
                     $ws->push($i,$add_user);
                 }
             }
-            echo "$request->fd 添加用户到所有用户列表\n";
+            echo " 用户 $id 是否登录$checkAdd \n";
         });
 
         $ws->on('message', function ($ws, $frame) {
