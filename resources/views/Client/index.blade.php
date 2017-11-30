@@ -29,13 +29,6 @@
         <div class="chat_left">
             <div class="message_box" id="message_box">
                 <h1 id="title_box"></h1>
-                {{--<div class="msg_item fn-clear">
-                  <div class="uface"><img src="{{ asset('images/hetu.jpg')}}" width="40" height="40"  alt=""/></div>
-                  <div class="item_right">
-                    <div class="msg own">那个统计表也不能说明一切</div>
-                    <div class="name_time">河图 · 30秒前</div>
-                  </div>
-                </div>--}}
             </div>
             <div class="write_box">
                 <textarea id="message" name="message" class="write_area" placeholder="说点啥吧..."></textarea>
@@ -66,7 +59,7 @@
     $(document).ready(function (e) {
         var msg = document.getElementById('title_box');
         var user_list = $('.user_list');
-        var wsServer = 'ws://106.14.10.215:9505?id={{ $request->user()->id }}';
+        var wsServer = 'ws://127.0.0.1:9505?id={{ $request->user()->id }}';
         var websocket = new WebSocket(wsServer);
         var img_qian = "{{ env('IMG_URL') }}" + "/";
         var info;
@@ -82,6 +75,7 @@
         };
         //onmessage 监听服务器数据推送
         websocket.onmessage = function (evt) {
+            //console.log(evt.data);
             info = JSON.parse(evt.data);
             switch (info.type) {
                 case 'msg':
@@ -96,7 +90,6 @@
                 default:
                     console.log(evt.fd);
             }
-            //
             //console.log(evt.fd);
         };
         $('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
@@ -153,8 +146,6 @@
 
         $("#message_box").append(htmlData);
         $('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
-
-
     }
 
     function add_user(user_info) {
