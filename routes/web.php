@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/test','ClientController@test');
+Route::get('/test1','ClientController@test');
 
 Route::group(['middleware' => 'auth.user'], function () {
     Route::get('/client/index','ClientController@index');
