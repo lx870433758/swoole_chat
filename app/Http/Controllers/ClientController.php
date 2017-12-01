@@ -9,7 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
-
+    public function test(){
+        $redis = Redis::connection();
+        $id=9;
+        $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
+        $checkAdd = empty($user_list[$id]) || $user_list[$id] =='[]' ? 1:0;
+        return $checkAdd;
+    }
     public function index(Request $request){
         
         $redis = Redis::connection();
