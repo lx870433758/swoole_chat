@@ -7,7 +7,7 @@
     <link href="{{asset('auth/css/login2.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<h1>聊天室<sup>lix</sup></h1>
+<h1>聚乐生活网<sup>jule</sup></h1>
 
 <div class="login" style="margin-top:50px;">
 
