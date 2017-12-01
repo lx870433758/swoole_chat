@@ -37,7 +37,6 @@ class SwooleCommand extends Command
      */
     public function handle()
     {
-
         $ws = new Swoole("0.0.0.0", 9505);
         $ws->swoole_start();
     }
