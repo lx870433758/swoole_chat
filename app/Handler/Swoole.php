@@ -32,8 +32,8 @@ class Swoole extends \swoole_websocket_server{
 
             //更新用户列表
             $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
+            echo json_encode($user_list);
             $checkAdd = isset($user_list[$id]) ? 1:0;
-            echo json_encode($user_list[$id]);
             $user_list[$id] = $userInfo;
             $redis->set('user_list', json_encode($user_list)) ;
 
