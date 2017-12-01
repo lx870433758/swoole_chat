@@ -14,7 +14,7 @@ class ClientController extends Controller
         $id=9;
         $user_list = $redis->exists('user_list') ? json_decode($redis->get('user_list'),true): [];
         $checkAdd = empty($user_list[$id]) || $user_list[$id] =='[]' ? 1:0;
-        return $checkAdd;
+        return $user_list;
     }
     public function index(Request $request){
         
